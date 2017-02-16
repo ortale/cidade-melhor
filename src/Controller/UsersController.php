@@ -57,6 +57,11 @@ class UsersController extends AppController
      */
     public function add()
     {
+        if (!$this->request->is(['post'])) {
+            $this->set('error', 'The request must be POST');
+            return $error;
+        }
+
         $this->Crud->on('afterSave', function(Event $event) {
             if ($event->subject->created) {
                 $this->set('data', [
